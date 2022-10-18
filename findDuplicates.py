@@ -1,7 +1,7 @@
 import os
 # Globals
 titles = []
-
+duplicates = []
 
 # Step 1
 def grabFileNames():    
@@ -13,12 +13,12 @@ def grabFileNames():
 # Step 2
 def findDuplicates(fileList):
     fileList.remove('.DS_Store')
-    print('Finding duplicates')
+    print('Finding duplicates...')
     nameList = []
     for fileName in fileList:
         nameList = makeStringList(fileName)
         if nameList in titles:
-            print(f'Potential Duplicate: {fileName}')
+            duplicates.append(fileName)
         else:
             titles.append(nameList)
         nameList = []
@@ -51,7 +51,12 @@ def containsNumber(inputString):
 
 def main():
     grabFileNames()
-    print("Done")
+    duplicates.sort(key=lambda x: x.lower())
+    if len(duplicates) == 0:
+        print("No Duplicates Found")
+    else:
+        for string in duplicates:
+            print(f'Potential Duplicate: {string}')
 
     
 if __name__ == '__main__':
